@@ -1,4 +1,7 @@
 #include "./Bureaucrat.hpp"
+#include "./Form.hpp"
+#include <exception>
+#include <iostream>
 #include <ostream>
 #include <string>
 
@@ -51,4 +54,21 @@ void Bureaucrat::decrementGrade() {
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &b) {
   os << b.getName() << ", bureaucrat grade " << b.getGrade() << ".";
   return os;
+}
+
+void Bureaucrat::signForm(Form &f) {
+  if (f.getIsSigned()) {
+    std::cout << "The form named: " << this->getName()
+              << "is already signed from someone else!" << std::endl;
+    return;
+  }
+
+  try {
+    f.beSigned(*this);
+    std::cout << this->getName() << " signed the form named: " << f.getName()
+              << std::endl;
+  } catch (std::exception &e) {
+    std::cout << _name << " couldn't sign " << f.getName() << " because "
+              << e.what() << std::endl;
+  }
 }

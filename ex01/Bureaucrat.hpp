@@ -1,8 +1,12 @@
+#pragma once
+
 #ifndef BUREAUCRAT_HPP
 #define BUREAUCRAT_HPP
 
 #include <exception>
 #include <string>
+
+class Form;
 
 class Bureaucrat {
 
@@ -34,6 +38,8 @@ public:
 
   void incrementGrade();
   void decrementGrade();
+
+  void signForm(Form &f);
 };
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &b);
