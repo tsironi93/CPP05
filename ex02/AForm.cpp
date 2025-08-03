@@ -1,5 +1,6 @@
 #include "./AForm.hpp"
 #include "./Bureaucrat.hpp"
+#include "AnsiColors.hpp"
 #include <iostream>
 
 AForm::AForm(const std::string &name, const int toSign, const int toExec)
@@ -38,13 +39,24 @@ int AForm::getExec() const { return _toExec; }
 bool AForm::getIsSigned() const { return _isSigned; }
 
 const char *AForm::GradeTooHighException::what() const noexcept {
-  return "GradeTooHighException triggered\nGrade needs to be between 1 and "
-         "150\n";
+  return RESET BOLD YELLOW
+      "GradeTooHighException triggered\nGrade needs to be between 1 and "
+      "150\n" RESET;
 }
 
 const char *AForm::GradeTooLowException::what() const noexcept {
-  return "GradeTooLowException triggered\nGrade needs to be between 1 and "
-         "150\n";
+  return RESET BOLD YELLOW
+      "GradeTooLowException triggered\nGrade needs to be between 1 and "
+      "150\n" RESET;
+}
+
+const char *AForm::FormNotSignedException::what() const noexcept {
+  return RESET BOLD YELLOW
+      "Form cant be executed because its not signed\n" RESET;
+}
+
+const char *AForm::FormIsAlreadySignedException::what() const noexcept {
+  return RESET BOLD YELLOW "Form is already signed by another Bureaucrat" RESET;
 }
 
 std::ostream &operator<<(std::ostream &os, const AForm &f) {
@@ -56,10 +68,22 @@ std::ostream &operator<<(std::ostream &os, const AForm &f) {
 }
 
 bool AForm::beSigned(const Bureaucrat &b) {
+  if (this->getIsSigned()) {
+    throw FormIsAlreadySignedException();
+    return false;
+  }
   if (this->_toSign < b.getGrade()) {
     throw GradeTooLowException();
     return false;
   }
   this->_isSigned = true;
   return true;
+}
+
+void AForm::execute(Bureaucrat const &executor) const {
+  if (!_isSigned)
+    throw FormNotSignedException();
+  if (executor.getGrade() > this->_toExec)
+    throw GradeTooLowException();
+  performAction();
 }

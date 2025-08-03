@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef SHRUBBERYCREATIONFORM_HPP
-#define SHRUBBERYCREATIONFORM_HPP
-
 #include "AForm.hpp"
 #include <string>
 
@@ -15,13 +12,11 @@ public:
   ShrubberyCreationForm() = delete;
   ShrubberyCreationForm(const std::string &target);
   ~ShrubberyCreationForm();
-  ShrubberyCreationForm(const ShrubberyCreationForm &other);
-  ShrubberyCreationForm &operator=(const ShrubberyCreationForm &other);
+  ShrubberyCreationForm(const ShrubberyCreationForm &other) = delete;
+  ShrubberyCreationForm &operator=(const ShrubberyCreationForm &other) = delete;
 
   //====================================================//
   //====================Fuctionality====================//
   //====================================================//
-  void execute(const std::string &target) const override;
+  void performAction() const override;
 };
-
-#endif // !ShrubberyCreationForm

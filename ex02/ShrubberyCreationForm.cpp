@@ -4,16 +4,14 @@
 #include <fstream>
 #include <iostream>
 #include <ostream>
-#include <stdexcept>
-#include <string>
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target)
     : AForm("ShrubberyCreationForm", 145, 137), _target(target) {}
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
-void ShrubberyCreationForm::execute(const std::string &target) const {
-  std::ofstream outfile(target + "_shrubbery");
+void ShrubberyCreationForm::performAction() const {
+  std::ofstream outfile(this->_target + "_shrubbery");
   if (!outfile)
     std::runtime_error("Failed to create the file");
   outfile << YELLOW <<

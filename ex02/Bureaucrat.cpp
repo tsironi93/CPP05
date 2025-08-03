@@ -1,5 +1,6 @@
 #include "./Bureaucrat.hpp"
 #include "./AForm.hpp"
+#include "./AnsiColors.hpp"
 #include <exception>
 #include <iostream>
 #include <ostream>
@@ -30,13 +31,15 @@ const std::string &Bureaucrat::getName() const { return _name; }
 int Bureaucrat::getGrade() const { return _grade; }
 
 const char *Bureaucrat::GradeTooHighException::what() const noexcept {
-  return "GradeTooHighException triggered\nGrade needs to be between 1 and "
-         "150\n";
+  return RESET BOLD YELLOW
+      "GradeTooHighException triggered\nGrade needs to be between 1 and "
+      "150\n" RESET;
 }
 
 const char *Bureaucrat::GradeTooLowException::what() const noexcept {
-  return "GradeTooLowException triggered\nGrade needs to be between 1 and "
-         "150\n";
+  return RESET BOLD YELLOW
+      "GradeTooLowException triggered\nGrade needs to be between 1 and "
+      "150\n" RESET;
 }
 
 void Bureaucrat::incrementGrade() {
@@ -57,18 +60,24 @@ std::ostream &operator<<(std::ostream &os, const Bureaucrat &b) {
 }
 
 void Bureaucrat::signForm(AForm &f) {
-  if (f.getIsSigned()) {
-    std::cout << "The form named: " << this->getName()
-              << "is already signed from someone else!" << std::endl;
-    return;
-  }
-
   try {
     f.beSigned(*this);
     std::cout << this->getName() << " signed the form named: " << f.getName()
               << std::endl;
   } catch (std::exception &e) {
-    std::cout << _name << " couldn't sign " << f.getName() << " because "
-              << e.what() << std::endl;
+    std::cout << BOLD << RED << _name << " couldn't sign " << f.getName()
+              << " because:\nException: " << e.what() << std::endl;
+  }
+}
+
+void Bureaucrat::executeForm(const AForm &form) const {
+  try {
+    form.execute(*this);
+    std::cout << GREEN << BOLD << this->_name << " executed " << form.getName()
+              << RESET << std::endl;
+  } catch (std::exception &e) {
+    std::cout << RED << BOLD << this->_name << " couldnt execute "
+              << form.getName() << " because of: \nException: " << e.what()
+              << RESET << std::endl;
   }
 }

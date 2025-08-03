@@ -34,6 +34,15 @@ public:
     const char *what() const noexcept override;
   };
 
+  class FormNotSignedException : public std::exception {
+  public:
+    const char *what() const noexcept override;
+  };
+
+  class FormIsAlreadySignedException : public std::exception {
+    const char *what() const noexcept override;
+  };
+
   //====================================================//
   //=======================Geters=======================//
   //====================================================//
@@ -46,7 +55,10 @@ public:
   //====================Fuctionality====================//
   //====================================================//
   bool beSigned(const Bureaucrat &b);
-  virtual void execute(const std::string &target) const = 0;
+  void execute(Bureaucrat const &executor) const;
+
+protected:
+  virtual void performAction() const = 0;
 };
 
 std::ostream &operator<<(std::ostream &os, const AForm &f);
