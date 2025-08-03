@@ -5,10 +5,22 @@
 #include <iostream>
 #include <ostream>
 
+ShrubberyCreationForm::ShrubberyCreationForm()
+    : AForm("ShrubberyCreationForm", 145, 137), _target("Default") {};
+
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target)
     : AForm("ShrubberyCreationForm", 145, 137), _target(target) {}
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
+
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other)
+    : _target(other._target) {}
+
+ShrubberyCreationForm &
+ShrubberyCreationForm::operator=(const ShrubberyCreationForm &other) {
+  (void)other;
+  return *this;
+}
 
 void ShrubberyCreationForm::performAction() const {
   std::ofstream outfile(this->_target + "_shrubbery");

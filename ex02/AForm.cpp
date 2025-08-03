@@ -3,6 +3,8 @@
 #include "AnsiColors.hpp"
 #include <iostream>
 
+AForm::AForm() : _name("Default"), _toSign(75), _toExec(75), _isSigned(false) {}
+
 AForm::AForm(const std::string &name, const int toSign, const int toExec)
     : _name(name), _toSign(toSign), _toExec(toExec), _isSigned(false) {
 

@@ -15,7 +15,7 @@ private:
   bool _isSigned;
 
 public:
-  AForm() = delete;
+  AForm();
   AForm(const std::string &name, const int toSign, const int toExec);
   virtual ~AForm();
   AForm(const AForm &other);

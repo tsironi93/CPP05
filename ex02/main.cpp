@@ -1,7 +1,9 @@
 
+#include "AnsiColors.hpp"
 #include "Bureaucrat.hpp"
 // #include "PresidentialPardonForm.hpp"
 // #include "RobotomyRequestForm.hpp"
+#include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include <iostream>
 
@@ -35,21 +37,23 @@ int main() {
   //     alice.executeForm(form);  // Should throw FormNotSignedException
   // });
   //
-  // runTest("4. Execution with too low grade", []() {
-  //     Bureaucrat joe("Joe", 140);  // Sign is OK, exec is too low
-  //     ShrubberyCreationForm form("backyard");
-  //     joe.signForm(form);         // Should succeed
-  //     joe.executeForm(form);      // Should fail
-  // });
-  //
-  // runTest("5. Robotomy 10 attempts (see randomness)", []() {
-  //     Bureaucrat driller("RoboOp", 1);
-  //     RobotomyRequestForm form("Marvin");
-  //     driller.signForm(form);
-  //     for (int i = 0; i < 10; ++i) {
-  //         driller.executeForm(form);  // Random success/failure
-  //     }
-  // });
+  runTest("4. Execution with too low grade", []() {
+    Bureaucrat joe("Joe", 140); // Sign is OK, exec is too low
+    ShrubberyCreationForm form("backyard");
+    joe.signForm(form);    // Should succeed
+    joe.executeForm(form); // Should fail
+  });
+
+  runTest("5. Robotomy 10 attempts (see randomness)", []() {
+    Bureaucrat driller("RoboOp", 1);
+    RobotomyRequestForm form("Marvin");
+    driller.signForm(form);
+    for (int i = 0; i < 10; ++i) {
+      std::cout << BOLD << "=================================================\n"
+                << RESET << std::endl;
+      driller.executeForm(form); // Random success/failure
+    }
+  });
   //
   // runTest("6. Pardon with exact grade", []() {
   //     Bureaucrat zaphod("Zaphod", 5);

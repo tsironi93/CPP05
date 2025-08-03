@@ -3,17 +3,17 @@
 #include "AForm.hpp"
 #include <string>
 
-class ShrubberyCreationForm : public AForm {
+class PresidentialPardonForm : public AForm {
 
 private:
   const std::string _target;
 
 public:
-  ShrubberyCreationForm();
-  ShrubberyCreationForm(const std::string &target);
-  ~ShrubberyCreationForm();
-  ShrubberyCreationForm(const ShrubberyCreationForm &other);
-  ShrubberyCreationForm &operator=(const ShrubberyCreationForm &other);
+  PresidentialPardonForm();
+  PresidentialPardonForm(const std::string &target);
+  ~PresidentialPardonForm();
+  PresidentialPardonForm(const PresidentialPardonForm &other);
+  PresidentialPardonForm &operator=(const PresidentialPardonForm &other);
 
   //====================================================//
   //====================Fuctionality====================//
