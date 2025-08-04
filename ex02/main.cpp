@@ -1,10 +1,8 @@
-
+#include "./Bureaucrat.hpp"
+#include "./PresidentialPardonForm.hpp"
+#include "./RobotomyRequestForm.hpp"
+#include "./ShrubberyCreationForm.hpp"
 #include "AnsiColors.hpp"
-#include "Bureaucrat.hpp"
-// #include "PresidentialPardonForm.hpp"
-// #include "RobotomyRequestForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "ShrubberyCreationForm.hpp"
 #include <iostream>
 
 void runTest(const std::string &testName, std::function<void()> testFunc) {
@@ -30,13 +28,13 @@ int main() {
     bob.signForm(form);
     bob.executeForm(form); // Should create file
   });
-  //
-  // runTest("3. Execution without signing", []() {
-  //     Bureaucrat alice("Alice", 1);
-  //     PresidentialPardonForm form("Ford");
-  //     alice.executeForm(form);  // Should throw FormNotSignedException
-  // });
-  //
+
+  runTest("3. Execution without signing", []() {
+    Bureaucrat alice("Alice", 1);
+    PresidentialPardonForm form("Ford");
+    alice.executeForm(form); // Should throw FormNotSignedException
+  });
+
   runTest("4. Execution with too low grade", []() {
     Bureaucrat joe("Joe", 140); // Sign is OK, exec is too low
     ShrubberyCreationForm form("backyard");
@@ -54,13 +52,13 @@ int main() {
       driller.executeForm(form); // Random success/failure
     }
   });
-  //
-  // runTest("6. Pardon with exact grade", []() {
-  //     Bureaucrat zaphod("Zaphod", 5);
-  //     PresidentialPardonForm form("Arthur");
-  //     zaphod.signForm(form);      // Needs 25 — OK
-  //     zaphod.executeForm(form);   // Needs 5 — OK
-  // });
-  //
+
+  runTest("6. Pardon with exact grade", []() {
+    Bureaucrat zaphod("Zaphod", 5);
+    PresidentialPardonForm form("Arthur");
+    zaphod.signForm(form);    // Needs 25 — OK
+    zaphod.executeForm(form); // Needs 5 — OK
+  });
+
   return 0;
 }
